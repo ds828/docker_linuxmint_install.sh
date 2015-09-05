@@ -169,6 +169,17 @@ do_install() {
 	if [ -z "$lsb_dist" ] && [ -r /etc/os-release ]; then
 		lsb_dist="$(. /etc/os-release && echo "$ID")"
 	fi
+    
+    #hack by Di
+    #for LMDE and linux mint
+    if [ "$lsb_dist" = "LinuxMint" ]; then
+        lsb_dist_name="$(. /etc/os-release && echo "$NAME")"
+        if [ "$lsb_dist_name" = "Linux Mint LMDE" ]; then
+            lsb_dist='debian'
+        else
+            lsb_dist='ubuntu'
+        fi
+    fi
 
 	lsb_dist="$(echo "$lsb_dist" | tr '[:upper:]' '[:lower:]')"
 
